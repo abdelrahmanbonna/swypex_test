@@ -52,7 +52,7 @@ class HomeState extends ChangeNotifier {
         ExchangeRate(
           base: _base?.code ?? "",
           covertionCurr: _symbols?.code ?? '',
-          price: value[_symbols?.code].toString() ?? '',
+          price: value[_symbols?.code].toString(),
           date: key,
         ),
       );
