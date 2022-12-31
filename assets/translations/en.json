@@ -1,0 +1,12 @@
+{
+  "global": {
+    "unexpected_error": "Unexpected Error please try again later"
+  },
+  "home": {
+    "to": "To",
+    "submit": "Submit",
+    "start_date_should_be_before_end_date": "Start Date should be before End Date.",
+    "please_select_base_currency": "Please select Base currency",
+    "please_select_currency_to_convert_to": "Please select currency to convert to"
+  }
+}
