@@ -81,7 +81,7 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setData(ExchangeRatesData data) {
+  void setData(ExchangeRatesData? data) {
     _data = data;
     notifyListeners();
   }

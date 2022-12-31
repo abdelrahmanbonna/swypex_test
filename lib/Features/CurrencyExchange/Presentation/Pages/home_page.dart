@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swypex_test/Core/Extentions/extensions.dart';
 import 'package:swypex_test/Features/CurrencyExchange/Presentation/Providers/home_provider.dart';
 
+import '../Widgets/exchange_card.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -58,9 +60,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
                                         lastDate: DateTime.now(),
-                                      ).then((value) => ref
-                                          .read(homeProvider)
-                                          .setStartDate(value ?? DateTime.now()));
+                                      )
+                                          .then((value) => ref
+                                              .read(homeProvider)
+                                              .setStartDate(
+                                                  value ?? DateTime.now()))
+                                          .then((value) => ref
+                                              .read(homeProvider)
+                                              .setData(null));
                                     },
                                     child: Center(
                                       child: Text(
@@ -114,9 +121,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
                                         lastDate: DateTime.now(),
-                                      ).then((value) => ref
-                                          .read(homeProvider)
-                                          .setEndDate(value ?? DateTime.now()));
+                                      )
+                                          .then((value) => ref
+                                              .read(homeProvider)
+                                              .setEndDate(
+                                                  value ?? DateTime.now()))
+                                          .then((value) => ref
+                                              .read(homeProvider)
+                                              .setData(null));
                                     },
                                     child: Center(
                                       child: Text(
@@ -168,6 +180,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                           ref
                                               .read(homeProvider)
                                               .setBase(currency);
+                                          ref.read(homeProvider).setData(null);
                                         },
                                       );
                                     },
@@ -225,6 +238,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                           ref
                                               .read(homeProvider)
                                               .setSymbols(currency);
+                                          ref.read(homeProvider).setData(null);
                                         },
                                       );
                                     },
@@ -304,92 +318,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 );
               },
               itemBuilder: (context, index) {
-                return FadeInLeft(
-                  duration: const Duration(milliseconds: 600),
-                  delay:  Duration(milliseconds: index*100,),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: theme.primaryColor.withOpacity(0.2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Center(
-                            child: Text(
-                              ref.watch(homeProvider).rates[index].date,
-                              style: theme.textTheme.bodyText1!.copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  'Currency',
-                                  style: theme.textTheme.bodyText1!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: Text(
-                                  'Price',
-                                  style: theme.textTheme.bodyText1!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  ref
-                                      .watch(homeProvider)
-                                      .rates[index]
-                                      .covertionCurr,
-                                  style: theme.textTheme.bodyText1!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: Text(
-                                  ref.watch(homeProvider).rates[index].price,
-                                  style: theme.textTheme.bodyText1!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                return ExchangeCard(
+                  date: ref.watch(homeProvider).rates[index].date,
+                  price: ref.watch(homeProvider).rates[index].date,
+                  convertionCurr:
+                      ref.watch(homeProvider).rates[index].covertionCurr,
                 );
               },
             ),
