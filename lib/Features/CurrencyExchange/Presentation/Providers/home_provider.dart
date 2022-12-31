@@ -26,7 +26,6 @@ class HomeState extends ChangeNotifier {
   ExchangeRatesData? _data;
   DateTime _startDate = DateTime.now(), _endDate = DateTime.now();
   Currency? _base, _symbols;
-  int length=10; //TODO use in Pagination
 
   HomeState() {
     _source = CurrencyDataSource(_service.publicDio);

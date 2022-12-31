@@ -1,6 +1,7 @@
 {
   "global": {
-    "unexpected_error": "Unexpected Error please try again later"
+    "unexpected_error": "Unexpected Error please try again later",
+    "no_internet_connection": "No Internet Connection"
   },
   "home": {
     "to": "To",

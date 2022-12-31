@@ -8,6 +8,12 @@ class ToastService {
     );
   }
 
+  static void showNoInternetConnectionErrorToast() {
+    EasyLoading.showError(
+      'global.no_internet_connection'.tr(),
+    );
+  }
+
   static void showErrorToast(String msg) {
     EasyLoading.showError(
       msg,

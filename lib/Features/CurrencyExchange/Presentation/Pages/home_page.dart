@@ -318,11 +318,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                 );
               },
               itemBuilder: (context, index) {
-                return ExchangeCard(
-                  date: ref.watch(homeProvider).rates[index].date,
-                  price: ref.watch(homeProvider).rates[index].date,
-                  convertionCurr:
-                      ref.watch(homeProvider).rates[index].covertionCurr,
+                return FadeInLeft(
+                  delay: Duration(milliseconds: index * 100),
+                  child: ExchangeCard(
+                    date: ref.watch(homeProvider).rates[index].date,
+                    price: ref.watch(homeProvider).rates[index].price,
+                    convertionCurr:
+                        ref.watch(homeProvider).rates[index].covertionCurr,
+                    base: ref.watch(homeProvider).rates[index].base,
+                  ),
                 );
               },
             ),

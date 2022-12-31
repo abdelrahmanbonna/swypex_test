@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,12 @@ class WebService {
           if (e.response?.statusCode == 500) {
             EasyLoading.dismiss();
             ToastService.showUnExpectedErrorToast();
-          }else {
+            return handler.next(e);
+          } else if (e.error.runtimeType == SocketException) {
+            EasyLoading.dismiss();
+            ToastService.showNoInternetConnectionErrorToast();
+            return handler.next(e);
+          } else {
             EasyLoading.dismiss();
             return handler.next(e);
           }

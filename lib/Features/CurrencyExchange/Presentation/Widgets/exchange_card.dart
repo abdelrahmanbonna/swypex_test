@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 class ExchangeCard extends StatelessWidget {
   final String date;
   final String price;
-  final String convertionCurr;
+  final String convertionCurr,base;
 
   const ExchangeCard({
     Key? key,
     required this.date,
     required this.price,
     required this.convertionCurr,
+    required this.base,
   }) : super(key: key);
 
   @override
@@ -73,7 +74,7 @@ class ExchangeCard extends StatelessWidget {
               children: [
                 Center(
                   child: Text(
-                    convertionCurr,
+                    base,
                     style: theme.textTheme.bodyText1!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class ExchangeCard extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    price,
+                    "$price $convertionCurr",
                     style: theme.textTheme.bodyText1!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
