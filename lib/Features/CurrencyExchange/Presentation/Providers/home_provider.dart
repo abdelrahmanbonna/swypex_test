@@ -115,7 +115,7 @@ class HomeState extends ChangeNotifier {
 
     return result.fold(
       (fail) {
-        ToastService.showErrorToast(fail.message);
+        ToastService.showErrorToast(fail.message.tr());
         return false;
       },
       (data) {

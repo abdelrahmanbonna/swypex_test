@@ -13,6 +13,7 @@ class CurrencyRepositoryImp implements CurrencyRepository {
 
   CurrencyRepositoryImp(this._source);
 
+  /// Get the Exchange rates for a base currency and a conversion currency
   @override
   Future<Either<Failure, ExchangeRatesData>> getExchangeRates(
       ExchangeRatesRequestData data) async {
@@ -25,10 +26,10 @@ class CurrencyRepositoryImp implements CurrencyRepository {
       if (response.success) {
         return Right(response.toExchangeRatesData());
       } else {
-        return Left(ServerFailure(''));
+        return Left(ServerFailure("global.server_error"));
       }
     } else {
-      return Left(ServerFailure(''));
+      return Left(ServerFailure(result.statusMessage??''));
     }
   }
 }

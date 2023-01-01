@@ -16,3 +16,10 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+### How to run this project:
+
+After following the online documentation provided above and installing flutter successfully please follow these steps:
+
+- Download the project and open a terminal window in the project root folder.
+- Run the command flutter pod install.
+- then run the project by flutter run and choose your device.

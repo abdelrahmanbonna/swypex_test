@@ -3,9 +3,8 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swypex_test/Core/Extentions/extensions.dart';
-import 'package:swypex_test/Features/CurrencyExchange/Presentation/Providers/home_provider.dart';
-
+import '../../../../Core/Extentions/extensions.dart';
+import '../Providers/home_provider.dart';
 import '../Widgets/exchange_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
