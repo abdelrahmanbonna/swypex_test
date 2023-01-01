@@ -7,6 +7,8 @@ import '../../../../Core/Extentions/extensions.dart';
 import '../Providers/home_provider.dart';
 import '../Widgets/exchange_card.dart';
 
+ScrollController _listScrollController = ScrollController();
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -15,6 +17,20 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+
+  @override
+  void initState() {
+    _listScrollController.addListener(() {
+      if(_listScrollController.position.pixels == _listScrollController.position.maxScrollExtent){
+        if(ref.watch(homeProvider).rates.last.date!="${ref.watch(homeProvider).endDate.year}-${ref.watch(homeProvider).endDate.month}-${ref.watch(homeProvider).endDate.day}"){
+          ref.watch(homeProvider).getExchangeRates();
+        }
+      }
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
@@ -283,7 +299,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ]),
                       child: InkWell(
                         onTap: () {
-                          ref.read(homeProvider).getExchangeRates();
+                          ref.read(homeProvider).getExchangeRates(firstLoad: true);
                         },
                         child: Center(
                           child: Text(
@@ -304,8 +320,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           Expanded(
             flex: 6,
             child: ListView.separated(
+              controller: _listScrollController,
               shrinkWrap: true,
-              itemCount: ref.watch(homeProvider).rates.length,
+              itemCount: ref.watch(homeProvider).rates.length ,
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.only(
                 top: mediaQuery.size.height * 0.02,

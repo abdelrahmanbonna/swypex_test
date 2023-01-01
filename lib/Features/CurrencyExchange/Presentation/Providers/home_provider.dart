@@ -18,19 +18,27 @@ class HomeState extends ChangeNotifier {
   final WebService _service = WebService();
 
   //late variables
+
+  // Those are used to get the data from the API
   late CurrencyDataSource _source;
   late CurrencyRepositoryImp _currencyRepository;
   late GetExchangeRatesUseCase _exchangeRatesUseCase;
+
+  // Those will be used in the pagination process
+  late DateTime _paginatedStartDate, _paginatedEndDate;
 
   //variables
   ExchangeRatesData? _data;
   DateTime _startDate = DateTime.now(), _endDate = DateTime.now();
   Currency? _base, _symbols;
+  bool _firstLoad = true;
 
   HomeState() {
     _source = CurrencyDataSource(_service.publicDio);
     _currencyRepository = CurrencyRepositoryImp(_source);
     _exchangeRatesUseCase = GetExchangeRatesUseCase(_currencyRepository);
+    _paginatedStartDate = _startDate;
+    _paginatedEndDate = _paginatedStartDate.add(const Duration(days: 9));
   }
 
   // Getters
@@ -59,6 +67,7 @@ class HomeState extends ChangeNotifier {
     return list;
   }
 
+
   // Setters
   void setStartDate(DateTime date) {
     _startDate = date;
@@ -81,14 +90,19 @@ class HomeState extends ChangeNotifier {
   }
 
   void setData(ExchangeRatesData? data) {
-    _data = data;
+    if(_firstLoad) {
+      _data = data;
+    }else{
+      _data?.rates.addAll(data!.rates);
+    }
     notifyListeners();
   }
 
   //Functions
 
   /// Makes requests using the provider variables which user change by choosing from menus
-  Future<bool> getExchangeRates() async {
+  Future<bool> getExchangeRates({bool firstLoad = false}) async {
+    // Validating data
     if (_startDate.isAfter(_endDate)) {
       ToastService.showErrorToast(
           'home.start_date_should_be_before_end_date'.tr());
@@ -102,16 +116,24 @@ class HomeState extends ChangeNotifier {
       return false;
     }
 
+    // Check if first load is true and set it to true if so
+    if (firstLoad) {
+      _paginatedStartDate = _startDate;
+      _paginatedEndDate = _startDate.add(const Duration(days: 9));
+      notifyListeners();
+    }
+
     EasyLoading.show();
     var result = await _exchangeRatesUseCase.call(
       ExchangeRatesRequestData(
         base: _base!.code,
         symbols: _symbols!.code,
-        startDate: _startDate,
-        endDate: _endDate,
+        startDate: _paginatedStartDate,
+        endDate: _paginatedEndDate,
       ),
     );
     EasyLoading.dismiss();
+
 
     return result.fold(
       (fail) {
@@ -119,7 +141,13 @@ class HomeState extends ChangeNotifier {
         return false;
       },
       (data) {
+        if(_paginatedEndDate.isBefore(_endDate) || !_paginatedEndDate.isAtSameMomentAs(_endDate)) {
+          _paginatedStartDate =
+              _paginatedStartDate.add(const Duration(days: 9));
+          _paginatedEndDate = _paginatedEndDate.add(const Duration(days: 9));
+        }
         setData(data);
+        _firstLoad = false;
         return true;
       },
     );
