@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+/// Used to display loading and messages in screen
 void configLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.hourGlass

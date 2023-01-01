@@ -8,6 +8,7 @@ import 'package:swypex_test/Features/CurrencyExchange/Domain/Entities/exchange_r
 import 'package:swypex_test/Features/CurrencyExchange/Domain/Entities/exchange_rates_request_data.dart';
 import 'package:swypex_test/Features/CurrencyExchange/Domain/Repositories/currency_repository.dart';
 
+/// This handles all Currency data source requests
 class CurrencyRepositoryImp implements CurrencyRepository {
   final CurrencyDataSource _source;
 

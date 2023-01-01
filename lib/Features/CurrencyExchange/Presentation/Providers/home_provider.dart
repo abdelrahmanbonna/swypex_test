@@ -58,7 +58,7 @@ class HomeState extends ChangeNotifier {
       list.add(
         ExchangeRate(
           base: _base?.code ?? "",
-          covertionCurr: _symbols?.code ?? '',
+          convertionCurr: _symbols?.code ?? '',
           price: value[_symbols?.code].toString(),
           date: key,
         ),
@@ -90,6 +90,7 @@ class HomeState extends ChangeNotifier {
   }
 
   void setData(ExchangeRatesData? data) {
+    // if first load add all data else only add new records
     if(_firstLoad) {
       _data = data;
     }else{
@@ -141,11 +142,13 @@ class HomeState extends ChangeNotifier {
         return false;
       },
       (data) {
+        // checking the date then setting the next pages to load
         if(_paginatedEndDate.isBefore(_endDate) || !_paginatedEndDate.isAtSameMomentAs(_endDate)) {
           _paginatedStartDate =
               _paginatedStartDate.add(const Duration(days: 9));
           _paginatedEndDate = _paginatedEndDate.add(const Duration(days: 9));
         }
+        // Setting the data to appear in the screen
         setData(data);
         _firstLoad = false;
         return true;

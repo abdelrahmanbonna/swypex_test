@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../Config/constants.dart';
 import 'toast_service.dart';
 
+/// Used to intercept the network traffic and implement the general behaviors
 class WebService {
   factory WebService() {
     _this ??= WebService._();

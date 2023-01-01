@@ -1,12 +1,12 @@
 class ExchangeRate {
   String base;
-  String covertionCurr;
+  String convertionCurr;
   String date;
   String price;
 
   ExchangeRate({
     required this.base,
-    required this.covertionCurr,
+    required this.convertionCurr,
     required this.date,
     required this.price,
   });

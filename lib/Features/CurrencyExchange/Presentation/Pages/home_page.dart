@@ -20,6 +20,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void initState() {
+    // This line listens to the user scrolling to detect when he reach the bottom and then call for more data
     _listScrollController.addListener(() {
       if(_listScrollController.position.pixels == _listScrollController.position.maxScrollExtent){
         if(ref.watch(homeProvider).rates.last.date!="${ref.watch(homeProvider).endDate.year}-${ref.watch(homeProvider).endDate.month}-${ref.watch(homeProvider).endDate.day}"){
@@ -340,7 +341,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     date: ref.watch(homeProvider).rates[index].date,
                     price: ref.watch(homeProvider).rates[index].price,
                     convertionCurr:
-                        ref.watch(homeProvider).rates[index].covertionCurr,
+                        ref.watch(homeProvider).rates[index].convertionCurr,
                     base: ref.watch(homeProvider).rates[index].base,
                   ),
                 );

@@ -1,5 +1,6 @@
 import 'package:swypex_test/Features/CurrencyExchange/Domain/Entities/exchange_rates_data.dart';
 
+/// [GetExchangeRates] response is saved here
 class GetExchangeRatesResponseData {
   bool success, timeSeries;
   String startDate, endDate, base;
